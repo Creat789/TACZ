@@ -53,7 +53,7 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
     );
 
     public ModernKineticGunItem() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).durability(750));
     }
 
     @Override
@@ -103,12 +103,21 @@ public class ModernKineticGunItem extends AbstractGunItem implements GunItemData
         if (gunIndex == null) {
             return;
         }
+
+        // 10% de chance de réduire la durabilité
+        if (Math.random() < 0.10) {
+            gunItem.hurtAndBreak(1, shooter, (entity) -> {
+                entity.broadcastBreakEvent(entity.getUsedItemHand());
+            });
+        }
+
         Optional.ofNullable(gunIndex.getScript())
                 .map(script -> checkFunction(script.get("shoot")))
                 .ifPresentOrElse(
                         func -> func.call(CoerceJavaToLua.coerce(api)),
                         ()   -> api.shootOnce(api.isShootingNeedConsumeAmmo()));
     }
+
 
     @Override
     public boolean startReload(ShooterDataHolder dataHolder, ItemStack gunItem, LivingEntity shooter){

@@ -64,6 +64,7 @@ public interface IGunOperator {
      */
     void initialData();
 
+
     /**
      * 服务端切枪逻辑
      */
@@ -177,4 +178,7 @@ public interface IGunOperator {
      * @return 是否为曳光弹
      */
     boolean nextBulletIsTracer(int tracerCountInterval);
+
+
+
 }

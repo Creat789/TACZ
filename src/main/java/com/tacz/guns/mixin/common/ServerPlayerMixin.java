@@ -12,6 +12,8 @@ public class ServerPlayerMixin {
     @Inject(method = "restoreFrom", at = @At("RETURN"))
     public void initialGunOperateData(ServerPlayer pThat, boolean pKeepEverything, CallbackInfo ci) {
         ServerPlayer player = (ServerPlayer) (Object) this;
+
+        // Côté serveur, on ne fait pas de tâches différées
         IGunOperator.fromLivingEntity(player).initialData();
     }
 }

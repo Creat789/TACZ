@@ -37,6 +37,7 @@ public class NetworkHandler {
     private static final AtomicInteger HANDSHAKE_ID_COUNT = new AtomicInteger(1);
 
     public static void init() {
+        CHANNEL.registerMessage(ID_COUNT.getAndIncrement(), ClientMessageSyncGunData.class, ClientMessageSyncGunData::encode, ClientMessageSyncGunData::decode, ClientMessageSyncGunData::handle, Optional.of(NetworkDirection.PLAY_TO_SERVER));
         CHANNEL.registerMessage(ID_COUNT.getAndIncrement(), ClientMessagePlayerShoot.class, ClientMessagePlayerShoot::encode, ClientMessagePlayerShoot::decode, ClientMessagePlayerShoot::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
         CHANNEL.registerMessage(ID_COUNT.getAndIncrement(), ClientMessagePlayerReloadGun.class, ClientMessagePlayerReloadGun::encode, ClientMessagePlayerReloadGun::decode, ClientMessagePlayerReloadGun::handle,
